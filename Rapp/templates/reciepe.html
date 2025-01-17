@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar bg-danger p-3 dark shadow-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand">Navbar</a>
+          <form class="d-flex" role="search">
+            {% if request.user.is_authenticated %}
+            <a href="/logout/" class="btn btn-success" type="submit">Logout</a>
+            {% else %}
+            <a href="/login/" class="btn btn-success" type="submit">Login</a>
+            {% endif %}
+          </form>
+        </div>
+      </nav>
+    <div class="container mt-5" >
+        <!-- Add Recipe Form -->
+        <form class="mx-auto card p-4 shadow-lg" style="max-width: 600px;" action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 class="text-center mb-4">Add Recipe</h2>
+            <hr>
+            <div class="mb-3">
+                <label for="recipe-name" class="form-label">Recipe Name</label>
+                <input type="text" required name="Reciepe_name" class="form-control" placeholder="Enter recipe name">
+            </div>
+            <div class="mb-3">
+                <label for="recipe-description" class="form-label">Recipe Description</label>
+                <textarea id="recipe-description" class="form-control" required name="Reciepe_description" placeholder="Enter recipe description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="recipe-image" class="form-label">Recipe Image</label>
+                <input type="file" id="recipe-image" name="Reciepe_image" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success w-100">Add Recipe</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- Search Recipe -->
+    <div class="container mt-5">
+        <div class="card p-3 shadow mx-auto" style="max-width: 600px;">
+            <form action="">
+                <div class="mb-3">
+                    <label for="search-recipe" class="form-label">Search Recipe</label>
+                    <input type="text" name="search" id="search-recipe" class="form-control" placeholder="Search..">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recipe Table -->
+    <div class="container mt-5">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Recipe Name</th>
+                        <th scope="col">Recipe Description</th>
+                        <th scope="col">Recipe Image</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Reciepe in Reciepe1 %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ Reciepe.Reciepe_name }}</td>
+                        <td>{{ Reciepe.Reciepe_description }}</td>
+                        <td>
+                            <img src="/media/{{ Reciepe.Reciepe_image }}" class="img-fluid rounded" style="max-width: 150px;">
+                        </td>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <a href="/deleterp/{{ Reciepe.id }}/" class="btn btn-danger btn-sm mb-2">Delete</a>
+                                <a href="/updaterp/{{ Reciepe.id }}/" class="btn btn-success btn-sm">Update</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
