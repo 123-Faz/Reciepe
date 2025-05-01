@@ -16,7 +16,7 @@ def Reciepe1(request):
         Reciepe.objects.create(
         Reciepe_name = Reciepe_name,
         Reciepe_description = Reciepe_description,
-        Reciepe_image = Reciepe_image,
+        Reciepe_image = Recieplse_image,
         )
         
         return redirect('/Reciepe1/')
